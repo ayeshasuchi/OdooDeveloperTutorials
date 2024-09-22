@@ -56,3 +56,14 @@ class EstatePropertyOffer(models.Model):
         for offer in self:
             offer.status='refused'
 
+    @api.model
+    def create(self, vals_list):
+        if vals_list.get('property_id') and vals_list.get('price'):
+            prop = self.env['estate.property'].browse(vals_list['property_id'])
+            if prop.offer_ids:
+                maxPrice = max(prop.mapped("offer_ids.price"))
+                if vals_list['price'] <= maxPrice:
+                    raise UserError("The offer price must be grater than %.2f" % maxPrice)
+            prop.state='offer_received'
+        return super().create(vals_list)
+
