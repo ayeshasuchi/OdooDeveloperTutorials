@@ -48,7 +48,7 @@ class EstatePropertyOffer(models.Model):
                 {
                     'buyer_id' : self.partner_id.id,
                     'selling_price' :self.price,
-                    'state': 'sold'
+                    'state':'offer_accepted',
                 }
             )
 
