@@ -1,4 +1,4 @@
-from odoo import models,fields,_
+from odoo import models, fields, _, Command
 from odoo.exceptions import UserError
 
 
@@ -16,18 +16,13 @@ class EstateProperty(models.Model):
             'partner_id': self.buyer_id.id,
             'journal_id': journal.id,  # company comes from the journal
             'invoice_line_ids':[
-                (
-                    0,
-                    0,
-                    {
+                Command.create({
                         'name':self.name,
                         'quantity':1.00,
                         'price_unit': self.selling_price*6.00/100.00,
                     }
                 )
-                ,(
-                    0,
-                    0,
+                ,Command.create(
                     {
                         'name':'Administrative Fees',
                         'quantity':1.00,
