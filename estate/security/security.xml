@@ -15,9 +15,12 @@
         <field name="model_id" ref="model_estate_property"/>
         <field name="groups" eval="[(4, ref('estate_group_user')), (4, ref('base.group_user'))]"/>
         <field name="domain_force">[
-            '|', ('salesman_id', '=', user.id),
-                 ('salesman_id', '=', False)
-        ]</field>
+                '&amp;',
+                '|',
+                ('salesman_id', '=', user.id),
+                ('salesman_id', '=', False),
+                ('company_id', '=', user.company_id.id)
+                ]</field>
     </record>
 
 </odoo>

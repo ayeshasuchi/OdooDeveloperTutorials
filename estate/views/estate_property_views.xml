@@ -44,7 +44,9 @@
                     </div>
                     <group>
                         <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+
                         <group>
+                            <field name="company_id"/>
                             <field name="property_type_id" options="{'no_create': true, 'no_edit': true}"/>
                             <field name="postcode"/>
                             <field name="date_availability"/>

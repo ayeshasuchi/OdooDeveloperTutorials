@@ -9,6 +9,10 @@ class EstateProperty(models.Model):
         res = super(EstateProperty, self).action_sold()
         #create invoice
         self.ensure_one()
+
+        self.check_access_rights('write')
+        self.check_access_rule('write')
+
         #journal = self.env['account.move'].with_context(default_move_type='out_invoice')._get_default_journal()
         journal = self.env["account.journal"].search([("type", "=", "sale")], limit=1)
         invoice_vals_list = {
@@ -31,6 +35,9 @@ class EstateProperty(models.Model):
                 )
             ]
         }
+
+        print(" reached ".center(100, '='))
+
         moves = (self.env['account.move'].sudo().with_context(default_move_type='out_invoice')
                  .create(invoice_vals_list))
 
