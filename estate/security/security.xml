@@ -9,4 +9,15 @@
         <field name="category_id" ref="base.module_category_real_estate_brokerage"/>
         <field name="implied_ids" eval="[(4, ref('estate_group_user'))]"/>
     </record>
+
+    <record id="salesperson_rules_estate" model="ir.rule">
+        <field name="name">A description of the rule's role</field>
+        <field name="model_id" ref="model_estate_property"/>
+        <field name="groups" eval="[(4, ref('estate_group_user')), (4, ref('base.group_user'))]"/>
+        <field name="domain_force">[
+            '|', ('salesman_id', '=', user.id),
+                 ('salesman_id', '=', False)
+        ]</field>
+    </record>
+
 </odoo>
