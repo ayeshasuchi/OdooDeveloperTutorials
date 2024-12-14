@@ -68,6 +68,8 @@ class EstateProperty(models.Model):
         for prop in self:
             if prop.state == 'canceled':
                 raise UserError("A canceled property cannot be set as sold.")
+            if not any(offer.state == 'accepted' for offer in prop.offer_ids):
+                raise UserError("Cannot sell a property that doesn't have an accepted offer.")
             prop.state='sold'
 
     def action_cancel(self):
